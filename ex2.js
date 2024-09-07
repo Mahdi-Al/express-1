@@ -17,7 +17,10 @@ Search for the Product by ID: If the subcategory is found, search within its pro
 
 6- Start the Server: Set the application to listen on port 4000 and log a message to the console indicating that the server is running.
 */
-
+const express = require("express");
+const app = express();
+const PORT = 4000;
+// app.get()
 const storeData = [
   {
     category: "electronics",

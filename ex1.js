@@ -1,11 +1,11 @@
 /*
-1- Use npm to install the express package, which is a web framework for building server-side applications in Node.js.
+1- Use npm to install the express package, which is a web framework for building server-side applications in Node.js.✅
 
-2- Write code to import the express package into your program.
+2- Write code to import the express package into your program.✅
 
-3- Initialize an Express application by calling express() and store it in a variable named app.
+3- Initialize an Express application by calling express() and store it in a variable named app.✅
 
-4- Set Up a Route to Retrieve All Users: Create a GET route at /users that responds with a list of users
+4- Set Up a Route to Retrieve All Users: Create a GET route at /users that responds with a list of users✅
 
 5- Set Up a Route to Retrieve a User by ID: Create a GET route at /users/:id that extracts the id parameter from the request. Search the users array for a user with the matching id and return the user if found. If no user is found, return a "user not found" message.
 
@@ -54,3 +54,13 @@ const users = [
 ];
 
 //Answer
+const express = require("express");
+const app = express();
+const PORT = 5000;
+app.get("/users", (req, res) => {
+  res.send(users);
+});
+
+app.listen(PORT, () => {
+  console.log("server is ran");
+});
