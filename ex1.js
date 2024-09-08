@@ -7,12 +7,11 @@
 
 4- Set Up a Route to Retrieve All Users: Create a GET route at /users that responds with a list of users✅
 
-5- Set Up a Route to Retrieve a User by ID: Create a GET route at /users/:id that extracts the id parameter from the request. Search the users array for a user with the matching id and return the user if found. If no user is found, return a "user not found" message.
+5- Set Up a Route to Retrieve a User by ID: Create a GET route at /users/:id that extracts the id parameter from the request. Search the users array for a user with the matching id and return the user if found. If no user is found, return a "user not found" message.✅
 
-5- Create a route that matches any undefined paths using app.use("*", ...). This route should respond with a "not found" message.
+5- Create a route that matches any undefined paths using app.use("*", ...). This route should respond with a "not found" message.✅
 
-6- Set the application to listen on port 3000 
-
+6- Set the application to listen on port 3000 ✅
 */
 
 const users = [
@@ -56,11 +55,23 @@ const users = [
 //Answer
 const express = require("express");
 const app = express();
-const PORT = 5000;
+const PORT = 3000;
 app.get("/users", (req, res) => {
   res.send(users);
 });
-
+app.get("/users/:id", (req, res) => {
+  console.log(req.params);
+  const parseId = parseInt(req.params.id);
+  if (isNaN(parseId)) {
+    return res.status(400).send({ msg: "user not found" });
+  }
+  const findUserWithId = users.find((user) => user.id === parseId);
+  if (!findUserWithId) return res.sendStatus(404);
+  return res.send(findUserWithId);
+});
+app.get("*", (req, res) => {
+  res.send({ msg: "not found" });
+});
 app.listen(PORT, () => {
   console.log("server is ran");
 });
