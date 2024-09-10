@@ -1,21 +1,21 @@
 /*
 
 
-1- Import the express Package: Write code to import the express package into your program.
+1- Import the express Package: Write code to import the express package into your program.✅
 
-Initialize an Express Application: Initialize an Express application by calling express() and store it in a variable named app.
+Initialize an Express Application: Initialize an Express application by calling express() and store it in a variable named app.✅
 
-2- Create a Route to Retrieve a Product by Category, Subcategory, and ID: Set up a GET route in Express at the path /:category/:subcategory/:id. This route should extract the category, subcategory, and id parameters from the request.
+2- Create a Route to Retrieve a Product by Category, Subcategory, and ID: Set up a GET route in Express at the path /:category/:subcategory/:id. This route should extract the category, subcategory, and id parameters from the request.✅
 
-3- Search for the Category: Inside the route, search the storeData array for a category that matches the category parameter from the request.
+3- Search for the Category: Inside the route, search the storeData array for a category that matches the category parameter from the request.✅
 
-4- Search for the Subcategory: If the category is found, search within its subcategories for a subcategory that matches the subcategory parameter from the request.
+4- Search for the Subcategory: If the category is found, search within its subcategories for a subcategory that matches the subcategory parameter from the request.✅
 
-Search for the Product by ID: If the subcategory is found, search within its products for a product with an id that matches the id parameter from the request.
+Search for the Product by ID: If the subcategory is found, search within its products for a product with an id that matches the id parameter from the request.✅
 
-5- Respond with the Product or Error Messages: If the product is found, send it in the response. If any step fails (i.e., category, subcategory, or product is not found), send an appropriate error message ("did not find the category," "did not find the subcategory," or "did not find the product").
+5- Respond with the Product or Error Messages: If the product is found, send it in the response. If any step fails (i.e., category, subcategory, or product is not found), send an appropriate error message ("did not find the category," "did not find the subcategory," or "did not find the product").✅
 
-6- Start the Server: Set the application to listen on port 4000 and log a message to the console indicating that the server is running.
+6- Start the Server: Set the application to listen on port 4000 and log a message to the console indicating that the server is running.✅
 */
 const express = require("express");
 const app = express();
@@ -157,3 +157,31 @@ const storeData = [
 ];
 
 // answer
+
+// ! I wrote it in just one route because you said it in todo 2 and because of it you can just get data with adding all of routes...
+
+app.get("/:category/:subcategory/:id", (req, res) => {
+  const { category, subcategory, id } = req.params;
+  const parseId = parseInt(id);
+  const foundCategory = storeData.find((cat) => cat.category === category);
+  if (!foundCategory) {
+    return res.status(404).send("Did not find the category");
+  }
+  const foundSubcategory = foundCategory.subcategories.find(
+    (subcat) => subcat.subcategory === subcategory
+  );
+  if (!foundSubcategory) {
+    return res.status(404).send("Did not find the subcategory");
+  }
+  const foundProduct = foundSubcategory.products.find(
+    (product) => product.id === parseId
+  );
+  if (!foundProduct) {
+    return res.status(404).send("Did not find the product");
+  }
+  res.send(foundProduct);
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

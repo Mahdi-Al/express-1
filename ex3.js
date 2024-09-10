@@ -1,8 +1,8 @@
 /*
 
-1- Import the express Package: Write code to import the express package into your program.
+1- Import the express Package: Write code to import the express package into your program.✅
 
-2- Initialize an Express Application: Initialize an Express application by calling express() and store it in a variable named app.
+2- Initialize an Express Application: Initialize an Express application by calling express() and store it in a variable named app.✅
 
 3- Create a Route to Retrieve Products: Set up a GET route at /products that allows querying products based on optional query strings: maxPrice and limit.
 
@@ -14,7 +14,7 @@
 
 7- Send the Response: Send the filtered and limited list of products as the response.
 
-8- Start the Server: Set the application to listen on port 4000 and log a message to the console indicating that the server is running.
+8- Start the Server: Set the application to listen on port 4000 and log a message to the console indicating that the server is running.✅
 */
 
 const products = [
@@ -141,3 +141,14 @@ const products = [
 ];
 
 // answer
+const express = require("express");
+const app = express();
+const PORT = 4000;
+app.get("/products", (req, res) => {
+  console.log(req.query);
+  res.send(products);
+});
+
+app.listen(PORT, () => {
+  console.log(`The server ran in port ${PORT}`);
+});
