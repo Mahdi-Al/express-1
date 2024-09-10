@@ -4,15 +4,15 @@
 
 2- Initialize an Express Application: Initialize an Express application by calling express() and store it in a variable named app.✅
 
-3- Create a Route to Retrieve Products: Set up a GET route at /products that allows querying products based on optional query strings: maxPrice and limit.
+3- Create a Route to Retrieve Products: Set up a GET route at /products that allows querying products based on optional query strings: maxPrice and limit.✅
 
-4- Filter Products by Price: If the maxPrice query string is provided, filter the products array to include only products with a price less than the specified maxPrice.
+4- Filter Products by Price: If the maxPrice query string is provided, filter the products array to include only products with a price less than the specified maxPrice.✅
 
-5- Limit the Number of Results: If the limit query string is provided, slice the filtered results to return only the number of products specified by limit.
+5- Limit the Number of Results: If the limit query string is provided, slice the filtered results to return only the number of products specified by limit.✅
 
-6- If the maxPrice and limit query parameters are both missing, return the entire list of products as the response.
+6- If the maxPrice and limit query parameters are both missing, return the entire list of products as the response.✅
 
-7- Send the Response: Send the filtered and limited list of products as the response.
+7- Send the Response: Send the filtered and limited list of products as the response.✅
 
 8- Start the Server: Set the application to listen on port 4000 and log a message to the console indicating that the server is running.✅
 */
@@ -139,16 +139,34 @@ const products = [
     price: 79.99,
   },
 ];
-
 // answer
+
+const sortedNumbers = products.slice().sort((a, b) => a.price - b.price);
+const maxNumber = sortedNumbers[sortedNumbers.length - 1];
+
 const express = require("express");
 const app = express();
 const PORT = 4000;
 app.get("/products", (req, res) => {
-  console.log(req.query);
-  res.send(products);
-});
+  let newProducts = products.slice();
+  const { maxPrice, limit } = req.query;
 
+  const parsePrice = parseInt(maxPrice);
+  if (!isNaN(parsePrice)) {
+    newProducts = newProducts.filter((product) => product.price < parsePrice);
+  }
+  if (!isNaN(limit)) {
+    newProducts = newProducts.slice(0, limit);
+  }
+
+  if (limit > 20 || limit < 0) {
+    return res.status(404).send({ msg: "Sorry, can't find that :(" });
+  }
+  if (parsePrice > maxNumber.price || parsePrice < 0) {
+    return res.status(404).send({ msg: "Sorry, can't find that :(" });
+  }
+  res.status(200).send(newProducts);
+});
 app.listen(PORT, () => {
   console.log(`The server ran in port ${PORT}`);
 });
